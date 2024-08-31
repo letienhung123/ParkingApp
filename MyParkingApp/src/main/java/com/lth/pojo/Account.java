@@ -4,6 +4,7 @@
  */
 package com.lth.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -66,11 +67,26 @@ public class Account implements Serializable {
     private String phoneNumber;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "first_name")
+    private String firstName;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "last_name")
+    private String lastName;
+    @Size(max = 255)
+    @Column(name = "avatar")
+    private String avatar;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 5)
     @Column(name = "Role")
     private String role;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountID")
     private Set<AdminDetail> adminDetailSet;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountID")
     private Set<UserDetail> userDetailSet;
 
@@ -178,6 +194,48 @@ public class Account implements Serializable {
     @Override
     public String toString() {
         return "com.lth.pojo.Account[ accountID=" + accountID + " ]";
+    }
+
+    /**
+     * @return the firstName
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     * @param firstName the firstName to set
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     * @return the lastName
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * @param lastName the lastName to set
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     * @return the avatar
+     */
+    public String getAvatar() {
+        return avatar;
+    }
+
+    /**
+     * @param avatar the avatar to set
+     */
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
     
 }

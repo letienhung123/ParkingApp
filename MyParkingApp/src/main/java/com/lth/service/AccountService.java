@@ -5,12 +5,16 @@
 package com.lth.service;
 
 import com.lth.pojo.Account;
+import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author lth7p
  */
 public interface AccountService extends UserDetailsService{
-    
+    Account getAccountByUsername(String username);
+    boolean authAccount(String username, String password);
+    Account addAccount(Map<String, String> params, MultipartFile avatar);
 }

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -32,13 +33,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
     "com.lth.repository",
     "com.lth.service"
 })
+@Order(2)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Autowired
-    private Environment env;
+//    @Autowired
+//    private Environment env;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -49,9 +51,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public Cloudinary cloudinary() {
         Cloudinary cloudinary
                 = new Cloudinary(ObjectUtils.asMap(
-                        "cloud_name", this.env.getProperty("cloudinary.cloud_name"),
-                        "api_key", this.env.getProperty("cloudinary.api_id"),
-                        "api_secret", this.env.getProperty("cloudinary.api_secret"),
+                        "cloud_name", "dqyjpgsx5",
+                        "api_key", "698914141241731",
+                        "api_secret", "l245cihic1bEP5uxBjPrxY7-_CY",
                         "secure", true));
         return cloudinary;
     }

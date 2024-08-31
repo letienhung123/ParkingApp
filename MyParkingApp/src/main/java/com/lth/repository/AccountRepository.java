@@ -12,4 +12,6 @@ import com.lth.pojo.Account;
  */
 public interface AccountRepository {
     Account getAccountByUsername(String username);
+    boolean authAccount(String username, String password);
+    Account addAccount(Account u);
 }

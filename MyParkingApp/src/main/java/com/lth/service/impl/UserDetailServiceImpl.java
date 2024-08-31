@@ -14,11 +14,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author lth7p
  */
+@Service
 public class UserDetailServiceImpl implements UserDetailService{
     @Autowired
     private UserDetailRepository userRepo;
