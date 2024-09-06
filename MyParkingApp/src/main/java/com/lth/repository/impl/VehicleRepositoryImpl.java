@@ -4,11 +4,9 @@
  */
 package com.lth.repository.impl;
 
-import com.lth.pojo.Account;
-import com.lth.pojo.UserDetail;
-import com.lth.repository.UserDetailRepository;
+import com.lth.pojo.Vehicle;
+import com.lth.repository.VehicleRepository;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
@@ -20,25 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class UserDetailRepositoryImpl implements UserDetailRepository {
+public class VehicleRepositoryImpl implements VehicleRepository{
 
     @Autowired
     private LocalSessionFactoryBean factory;
-
+    
     @Override
-    public UserDetail findByUsername(String username) {
-        Session session = this.factory.getObject().getCurrentSession();
-        Query q = session.createQuery("SELECT u FROM UserDetail u WHERE u.accountID.username = :un");
-        q.setParameter("un", username);
-
-        return (UserDetail) q.getSingleResult();
-    }
-
-    @Override
-    public UserDetail addUserDetail(UserDetail u) {
+    public Vehicle addVehicle(Vehicle v) {
         Session s = this.factory.getObject().getCurrentSession();
-        s.save(u);
-        return u;
+        s.save(v);
+        return v;
     }
-
+    
 }

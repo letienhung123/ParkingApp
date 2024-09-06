@@ -21,13 +21,15 @@ const Header = () => {
     return (<>
         <Navbar bg="dark" data-bs-theme="dark">
             <Container>
-                <Navbar.Brand href="#home">Smart-Parking</Navbar.Brand>
+                <Navbar.Brand to="/">Smart-Parking</Navbar.Brand>
                 <Nav className="me-auto">
                     <Link className="nav-link" to="/">Trang chủ</Link>
-                    <Link className="nav-link" href="#features">Features</Link>
-                    <Link className="nav-link" href="#pricing">Hồ sơ cá nhân</Link>
-                    {user === null ? <Link className="nav-link text-danger" to="/login">Đăng nhập</Link> : 
+                    {user === null ? <>
+                        <Link className="nav-link text-danger" to="/login">Đăng nhập</Link>
+                        <Link className="nav-link text-danger" to="/register">Đăng kí</Link>
+                    </> : 
                     <>
+                        <Link className="nav-link" to="/user">Hồ sơ cá nhân</Link>
                         <Link className="nav-link text-info" to="/">Chào {user.firstName} {user.lastName}!</Link>
                         <Button onClick={logout} variant="secondary">Đăng xuất</Button>
                     </>}

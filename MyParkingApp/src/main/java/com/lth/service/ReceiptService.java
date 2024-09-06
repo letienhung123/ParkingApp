@@ -4,12 +4,19 @@
  */
 package com.lth.service;
 
+import com.lth.pojo.Reservation;
 import com.lth.pojo.ReservationTemp;
+import java.util.List;
+
 
 /**
  *
  * @author lth7p
  */
 public interface ReceiptService {
-    boolean addReceipt(ReservationTemp r);
+    void addReceipt(ReservationTemp r);
+    List<Reservation> getReservationsByLotID(int id);
+    List<Reservation> getReservationsByUserID(int id);
+    List<Reservation> getWaitingReservations(int id);
+    void updateReservation(int id);
 }

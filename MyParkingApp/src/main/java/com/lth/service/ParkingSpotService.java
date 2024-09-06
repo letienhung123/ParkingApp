@@ -5,6 +5,7 @@
 package com.lth.service;
 
 import com.lth.pojo.ParkingSpot;
+import com.lth.pojo.Spot;
 import java.util.List;
 
 /**
@@ -15,4 +16,7 @@ public interface ParkingSpotService {
     List<ParkingSpot> getSpotsByParkingLotId(int id);
     boolean addOrUpdateParkingSpot(ParkingSpot ps);
     ParkingSpot getParkingSpotById(int id);
+    void updateSpotInUse(int id);
+    void updateSpotEmpty(int id);
+    int countParkingSpotByLotID(int id);
 }

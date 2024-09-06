@@ -5,6 +5,7 @@
 package com.lth.repository;
 
 import com.lth.pojo.ParkingSpot;
+import com.lth.pojo.Spot;
 import java.util.List;
 
 /**
@@ -15,4 +16,8 @@ public interface ParkingSpotRepository {
     List<ParkingSpot> getSpotsByParkingLotId(int id);
     boolean addOrUpdateParkingSpot(ParkingSpot ps);
     ParkingSpot getParkingSpotById(int id);
+    List<ParkingSpot> findAllParkingSpots();
+    void updateSpotInUse (int id);
+    void updateSpotEmpty (int id);
+    int countParkingSpotByLotID(int id);
 }

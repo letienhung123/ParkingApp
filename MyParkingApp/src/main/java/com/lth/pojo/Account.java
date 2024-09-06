@@ -79,8 +79,8 @@ public class Account implements Serializable {
     @Column(name = "avatar")
     private String avatar;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 5)
+//    @NotNull
+//    @Size(min = 1, max = 5)
     @Column(name = "Role")
     private String role;
     @JsonIgnore

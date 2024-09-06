@@ -35,17 +35,28 @@ public class AccountRepositoryImpl implements AccountRepository {
 
         return (Account) q.getSingleResult();
     }
+
     @Override
     public boolean authAccount(String username, String password) {
-        Account  u = this.getAccountByUsername(username);   
+        Account u = this.getAccountByUsername(username);
         return this.passEncoder.matches(password, u.getPassword());
     }
-    
+
     @Override
     public Account addAccount(Account u) {
         Session s = this.factory.getObject().getCurrentSession();
         s.save(u);
-        
+
         return u;
+    }
+
+    @Override
+    public Account getAccountByReservationID(Integer reservationID) {
+        Session session = this.factory.getObject().getCurrentSession();
+        String hql = "SELECT a FROM Account a JOIN a.userDetailSet ud JOIN ud.reservationSet r WHERE r.reservationID = :reservationID";
+        Query<Account> query = session.createQuery(hql, Account.class);
+        query.setParameter("reservationID", reservationID);
+
+        return query.uniqueResult();
     }
 }

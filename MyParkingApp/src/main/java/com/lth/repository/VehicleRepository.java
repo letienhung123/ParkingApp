@@ -4,12 +4,12 @@
  */
 package com.lth.repository;
 
-import com.lth.pojo.UserDetail;
+import com.lth.pojo.Vehicle;
+
 /**
  *
  * @author lth7p
  */
-public interface UserDetailRepository {
-    UserDetail findByUsername(String username);
-    UserDetail addUserDetail(UserDetail u);
+public interface VehicleRepository {
+    Vehicle addVehicle(Vehicle v);
 }

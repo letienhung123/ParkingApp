@@ -4,6 +4,7 @@
  */
 package com.lth.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -49,16 +50,24 @@ public class UserDetail implements Serializable {
     @Column(name = "Avatar")
     private String avatar;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID")
+    @JsonIgnore
     private Set<Notification> notificationSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID")
+    @JsonIgnore
     private Set<Review> reviewSet;
     @JoinColumn(name = "AccountID", referencedColumnName = "AccountID")
+    @JsonIgnore
     @ManyToOne(optional = false)
     private Account accountID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID")
+    @JsonIgnore
     private Set<Reservation> reservationSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userID")
+    @JsonIgnore
     private Set<Vehicle> vehicleSet;
+    @Size(max = 20)
+    @Column(name = "LicensePlate")
+    private String licensePlate;
 
     public UserDetail() {
     }
@@ -158,6 +167,20 @@ public class UserDetail implements Serializable {
     @Override
     public String toString() {
         return "com.lth.pojo.UserDetail[ userID=" + userID + " ]";
+    }
+
+    /**
+     * @return the licensePlate
+     */
+    public String getLicensePlate() {
+        return licensePlate;
+    }
+
+    /**
+     * @param licensePlate the licensePlate to set
+     */
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
     }
     
 }

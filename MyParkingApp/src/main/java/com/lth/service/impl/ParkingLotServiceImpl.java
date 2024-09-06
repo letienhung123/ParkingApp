@@ -10,6 +10,7 @@ import com.lth.dto.ParkingLotDTO;
 import com.lth.pojo.AdminDetail;
 import com.lth.pojo.ParkingLot;
 import com.lth.repository.ParkingLotRepository;
+import com.lth.repository.ParkingSpotRepository;
 import com.lth.service.ParkingLotService;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class ParkingLotServiceImpl implements ParkingLotService {
 
     @Autowired
     private Cloudinary cloudinary;
+    @Autowired
+    private ParkingSpotRepository spotRepo;
 
     @Override
     public List<ParkingLot> getParkingLots(Map<String, String> params) {
@@ -58,13 +61,17 @@ public class ParkingLotServiceImpl implements ParkingLotService {
                 Logger.getLogger(ParkingLotServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+//        p.setTotalSpots(this.spotRepo.countParkingSpotByLotID(p.getParkingLotID()));
         p.setAdminID(new AdminDetail(1));
         return this.parkingLotRepo.addOrUpdateParkingLot(p);
     }
 
     @Override
     public ParkingLot getParkingLotById(int id) {
-        return this.parkingLotRepo.getParkingLotById(id);
+        
+        ParkingLot p = this.parkingLotRepo.getParkingLotById(id);
+        p.setEmptySpots(this.parkingLotRepo.countEmptyParkingSpot(id));
+        return p;
     }
 
     @Override

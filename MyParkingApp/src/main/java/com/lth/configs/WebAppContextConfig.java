@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -27,9 +28,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan(basePackages = {
     "com.lth.controllers",
     "com.lth.repository",
-    "com.lth.service"
+    "com.lth.service",
+    "com.lth.components"
 })
 @PropertySource("classpath:configs.properties")
+@EnableScheduling
 public class WebAppContextConfig implements WebMvcConfigurer {
 
     @Override
@@ -52,7 +55,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
 
     @Bean
     public SimpleDateFormat dateFormat() {
-        return new SimpleDateFormat("yyyy-MM-dd");
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     }
 
     @Bean

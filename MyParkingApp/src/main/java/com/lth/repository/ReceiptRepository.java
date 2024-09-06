@@ -4,7 +4,9 @@
  */
 package com.lth.repository;
 
+import com.lth.pojo.Reservation;
 import com.lth.pojo.ReservationTemp;
+import java.util.List;
 
 
 /**
@@ -12,5 +14,9 @@ import com.lth.pojo.ReservationTemp;
  * @author lth7p
  */
 public interface ReceiptRepository {
-    boolean addReceipt(ReservationTemp reservationTemp);
+    void addReceipt(ReservationTemp r);
+    List<Reservation> getReservationsByLotID(int id);
+    List<Reservation> getReservationsByUserID(int id);
+    List<Reservation> getWaitingReservations(int id);
+    void updateReservation(int id);
 }

@@ -23,6 +23,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,7 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Entity
 @Table(name = "parking_lot")
-@XmlRootElement
+//@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ParkingLot.findAll", query = "SELECT p FROM ParkingLot p"),
     @NamedQuery(name = "ParkingLot.findByParkingLotID", query = "SELECT p FROM ParkingLot p WHERE p.parkingLotID = :parkingLotID"),
@@ -56,21 +58,22 @@ public class ParkingLot implements Serializable {
     private Integer parkingLotID;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 5, max = 100, message = "Nhập tối thiểu 5 kí tự")
     @Column(name = "Name")
+    @NotBlank(message = "Tên bãi xe không được để trống.")
     private String name;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "Address")
+    @NotBlank(message = "Địa chỉ không được để trống.")
     private String address;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "TotalSpots")
     private int totalSpots;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
+    @Min(value = 1, message = "Giá dịch vụ phải lớn hơn 5.000VND.")
     @Column(name = "PricePerHour")
     private BigDecimal pricePerHour;
     @Lob
@@ -78,6 +81,7 @@ public class ParkingLot implements Serializable {
     @Column(name = "Facilities")
     private String facilities;
     @Size(max = 255)
+    @NotNull(message = "Vui lòng chọn file ảnh")
     @Column(name = "ImageURL")
     private String imageURL;
     @Column(name = "Latitude")
@@ -96,6 +100,7 @@ public class ParkingLot implements Serializable {
     private AdminDetail adminID;
     
     @Transient
+    @JsonIgnore
     private MultipartFile file;
     
     @Transient

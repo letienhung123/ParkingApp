@@ -7,7 +7,11 @@ package com.lth.service.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.lth.pojo.Account;
+import com.lth.pojo.AdminDetail;
+import com.lth.pojo.UserDetail;
 import com.lth.repository.AccountRepository;
+import com.lth.repository.AdminRepository;
+import com.lth.repository.UserDetailRepository;
 import com.lth.service.AccountService;
 import java.io.IOException;
 import java.util.HashSet;
@@ -35,9 +39,10 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepo;
     @Autowired
     private BCryptPasswordEncoder passEncoder;
-     @Autowired
-     private Cloudinary cloudinary;
-
+    @Autowired
+    private Cloudinary cloudinary;
+    @Autowired
+    private UserDetailRepository userRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -73,15 +78,19 @@ public class AccountServiceImpl implements AccountService {
         a.setRole("ROLE_USER");
         if (!avatar.isEmpty()) {
             try {
-                Map res = this.cloudinary.uploader().upload(avatar.getBytes(), 
+                Map res = this.cloudinary.uploader().upload(avatar.getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
                 a.setAvatar(res.get("secure_url").toString());
             } catch (IOException ex) {
                 Logger.getLogger(AccountServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
         this.accountRepo.addAccount(a);
+
+        UserDetail us = new UserDetail();
+        us.setAccountID(a);
+        this.userRepo.addUserDetail(us);
+
         return a;
     }
 

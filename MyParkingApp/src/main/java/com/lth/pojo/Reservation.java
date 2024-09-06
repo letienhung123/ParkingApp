@@ -4,6 +4,7 @@
  */
 package com.lth.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -23,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -42,6 +44,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Reservation.findByEndTime", query = "SELECT r FROM Reservation r WHERE r.endTime = :endTime"),
     @NamedQuery(name = "Reservation.findByReservationStatus", query = "SELECT r FROM Reservation r WHERE r.reservationStatus = :reservationStatus"),
     @NamedQuery(name = "Reservation.findByTotalPrice", query = "SELECT r FROM Reservation r WHERE r.totalPrice = :totalPrice")})
+
+    @NamedQuery(name = "Reservation.findByParkingLotID", query = "SELECT r FROM Reservation r WHERE r.spotID.parkingLotID.parkingLotID = :parkingLotID")
+
 public class Reservation implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -72,12 +77,26 @@ public class Reservation implements Serializable {
     private BigDecimal totalPrice;
     @JoinColumn(name = "SpotID", referencedColumnName = "SpotID")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private ParkingSpot spotID;
     @JoinColumn(name = "UserID", referencedColumnName = "UserID")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private UserDetail userID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reservationID")
+    @JsonIgnore
     private Set<Payment> paymentSet;
+    
+    @Transient
+    private String parkingLotName;
+    @Transient
+    private String fulName;
+    @Transient
+    private String plate;
+    @Transient
+    private String phoneNum;
+    @Transient
+    private String location;
 
     public Reservation() {
     }
@@ -183,5 +202,76 @@ public class Reservation implements Serializable {
     public String toString() {
         return "com.lth.pojo.Reservation[ reservationID=" + reservationID + " ]";
     }
-    
+
+    /**
+     * @return the parkingLotName
+     */
+    public String getParkingLotName() {
+        return parkingLotName;
+    }
+
+    /**
+     * @param parkingLotName the parkingLotName to set
+     */
+    public void setParkingLotName(String parkingLotName) {
+        this.parkingLotName = parkingLotName;
+    }
+
+    /**
+     * @return the fulName
+     */
+    public String getFulName() {
+        return fulName;
+    }
+
+    /**
+     * @param fulName the fulName to set
+     */
+    public void setFulName(String fulName) {
+        this.fulName = fulName;
+    }
+
+
+    /**
+     * @return the phoneNum
+     */
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    /**
+     * @param phoneNum the phoneNum to set
+     */
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+
+    /**
+     * @return the plate
+     */
+    public String getPlate() {
+        return plate;
+    }
+
+    /**
+     * @param plate the plate to set
+     */
+    public void setPlate(String plate) {
+        this.plate = plate;
+    }
+
+    /**
+     * @return the location
+     */
+    public String getLocation() {
+        return location;
+    }
+
+    /**
+     * @param location the location to set
+     */
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
 }

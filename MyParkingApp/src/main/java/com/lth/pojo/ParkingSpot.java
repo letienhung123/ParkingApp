@@ -4,6 +4,7 @@
  */
 package com.lth.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Basic;
@@ -19,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -58,9 +60,12 @@ public class ParkingSpot implements Serializable {
     private int spotNumber;
     @JoinColumn(name = "ParkingLotID", referencedColumnName = "ParkingLotID")
     @ManyToOne(optional = false)
+    @JsonIgnore
     private ParkingLot parkingLotID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "spotID")
+    @JsonIgnore
     private Set<Reservation> reservationSet;
+    
 
     public ParkingSpot() {
     }
@@ -148,5 +153,6 @@ public class ParkingSpot implements Serializable {
     public String toString() {
         return "com.lth.pojo.ParkingSpot[ spotID=" + spotID + " ]";
     }
+
     
 }

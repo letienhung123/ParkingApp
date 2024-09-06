@@ -5,6 +5,7 @@
 package com.lth.service.impl;
 
 import com.lth.pojo.ParkingSpot;
+import com.lth.pojo.Spot;
 import com.lth.repository.ParkingSpotRepository;
 import com.lth.service.ParkingSpotService;
 import java.util.List;
@@ -27,7 +28,6 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
 
     @Override
     public boolean addOrUpdateParkingSpot(ParkingSpot ps) {
-        ps.setStatus("Empty");
         return this.parkingSpotRepo.addOrUpdateParkingSpot(ps);
     }
 
@@ -35,5 +35,22 @@ public class ParkingSpotServiceImpl implements ParkingSpotService{
     public ParkingSpot getParkingSpotById(int id) {
         return this.parkingSpotRepo.getParkingSpotById(id);
     }
+
+    @Override
+    public void updateSpotInUse(int id) {
+        this.parkingSpotRepo.updateSpotInUse(id);
+    }
+
+    @Override
+    public void updateSpotEmpty(int id) {
+        this.parkingSpotRepo.updateSpotEmpty(id);
+    }
+
+    @Override
+    public int countParkingSpotByLotID(int id) {
+        return this.parkingSpotRepo.countParkingSpotByLotID(id);
+    }
+
+    
     
 }

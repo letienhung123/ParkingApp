@@ -4,10 +4,16 @@
  */
 package com.lth.controllers;
 
+import com.lth.components.DateUtils;
 import com.lth.pojo.ParkingLot;
 import com.lth.pojo.ParkingSpot;
+import com.lth.pojo.Reservation;
 import com.lth.service.ParkingLotService;
 import com.lth.service.ParkingSpotService;
+import com.lth.service.ReceiptService;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,11 +35,25 @@ public class ParkingSpotController {
     private ParkingSpotService parkingSpotService;
     @Autowired
     private ParkingLotService parkingLotService;
+    @Autowired
+    private ReceiptService receiptService;
 
     @RequestMapping("/parkinglots/{id}/parkingspots")
     public String getParkingSpots(Model model, @PathVariable("id") int id) {
+        Date now = new Date();
+
         model.addAttribute("parkingspots", this.parkingSpotService.getSpotsByParkingLotId(id));
         model.addAttribute("selectedParkingLot", this.parkingLotService.getParkingLotById(id));
+        model.addAttribute("reservationsByLotID", this.receiptService.getWaitingReservations(id));
+        model.addAttribute("now", now);
+
+        List<String> timeRemainingMessages = new ArrayList<>();
+        for (Reservation r : this.receiptService.getWaitingReservations(id)) {
+            String message = DateUtils.getTimeRemainingMessage(now, r.getStartTime(), r.getEndTime());
+            timeRemainingMessages.add(message);
+        }
+
+        model.addAttribute("timeRemainingMessages", timeRemainingMessages);
         return "parkingspots";
     }
 
@@ -48,6 +68,7 @@ public class ParkingSpotController {
     public String addParkingSpot(@PathVariable("parkingLotID") int id,
             @RequestParam("level") int level,
             @RequestParam("spotNumber") int num) {
+        int a =0;
 
         ParkingLot parkingLot = parkingLotService.getParkingLotById(id);
         for (int i = 1; i <= level; i++) {
@@ -57,9 +78,11 @@ public class ParkingSpotController {
                 ps.setSpotNumber(j);
                 ps.setParkingLotID(parkingLot);
                 parkingSpotService.addOrUpdateParkingSpot(ps);
+                a +=1;
             }
-        }
-        return "redirect:/"; 
+            parkingLot.setTotalSpots(a);
+        }     
+        return "redirect:/";
     }
 
 }

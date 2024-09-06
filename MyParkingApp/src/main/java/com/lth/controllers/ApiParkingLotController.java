@@ -39,7 +39,13 @@ public class ApiParkingLotController {
     @CrossOrigin
     public ResponseEntity<List<ParkingLot>> list(@RequestParam Map<String, String> params){
         List<ParkingLot> parkingLots = this.parkingLotService.getParkingLots(params);
-        return new ResponseEntity<>(this.parkingLotService.getParkingLots(params), HttpStatus.OK);
+        return new ResponseEntity<>(parkingLots, HttpStatus.OK);
+    }
+    @GetMapping("/parkinglots/{parkingLotID}")
+    @CrossOrigin
+    public ResponseEntity<ParkingLot> getParkingLot(@PathVariable("parkingLotID") int id){
+        ParkingLot p = this.parkingLotService.getParkingLotById(id);
+        return new ResponseEntity<>(p,HttpStatus.OK);
     }
     
 }

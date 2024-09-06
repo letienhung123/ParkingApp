@@ -9,6 +9,7 @@ import com.lth.service.ParkingLotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,10 +30,12 @@ public class ParkingLotController {
         return "parkinglots";
     }
     @PostMapping("/parkinglots")
-    public String add(@ModelAttribute(value = "parkinglot")ParkingLot parkingLot){ //hứng đối tượng từ client
+    public String add(@ModelAttribute(value = "parkinglot")ParkingLot parkingLot, BindingResult result){ //hứng đối tượng từ client
+        if(result.hasErrors())
+            return "parkinglots";
         if(parkingLotService.addOrUpdateParkingLot(parkingLot)==true)
             return "redirect:/";
-        return "parkinglots";
+        return "/";
     }
     @GetMapping("/parkinglots/{parkingLotID}")
     public String update(Model model,@PathVariable(value = "parkingLotID") int id){

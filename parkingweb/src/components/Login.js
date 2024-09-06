@@ -54,7 +54,7 @@ const Login = () => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
                     <Form.Label>Mật khẩu</Form.Label>
-                    <Form.Control value={password} onChange={e => setPassword(e.target.value)}  type="password" placeholder="Mật khẩu..." />
+                    <Form.Control value={password} onChange={e => setPassword(e.target.value)} autoComplete="new-password"  type="password" placeholder="Mật khẩu..." />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                     <Button variant="info" type="submit">Đăng nhập</Button>

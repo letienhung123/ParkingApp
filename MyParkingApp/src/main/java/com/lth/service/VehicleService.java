@@ -2,14 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.lth.repository;
+package com.lth.service;
 
-import com.lth.pojo.UserDetail;
+import com.lth.pojo.Vehicle;
+import java.util.Map;
+
 /**
  *
  * @author lth7p
  */
-public interface UserDetailRepository {
-    UserDetail findByUsername(String username);
-    UserDetail addUserDetail(UserDetail u);
+public interface VehicleService {
+    Vehicle addVehicle(Map<String, String> params);
 }

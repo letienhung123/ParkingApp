@@ -61,12 +61,16 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().ignoringAntMatchers("/api/**");
+        
         http.authorizeRequests().antMatchers("/api/login/").permitAll();
         http.authorizeRequests().antMatchers("/api/parkinglots/").permitAll();
         http.authorizeRequests().antMatchers("/api/parkinglots/**").permitAll();
-//        http.authorizeRequests().antMatchers("/api/categories/**").permitAll();
-//        http.authorizeRequests().antMatchers("/api/users/**").permitAll();
-//        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/**/comments/").permitAll();
+        http.authorizeRequests().antMatchers("/api/accounts/").permitAll();
+        
+//         http.authorizeRequests()
+//        .antMatchers("/MyParkingApp/login").hasRole("ADMIN") 
+//        .anyRequest().authenticated();
+
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")

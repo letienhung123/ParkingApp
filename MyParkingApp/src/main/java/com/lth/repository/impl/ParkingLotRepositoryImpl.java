@@ -143,4 +143,5 @@ public class ParkingLotRepositoryImpl implements ParkingLotRepository {
 
         return ((Long) q.getSingleResult()).intValue();
     }
+
 }
