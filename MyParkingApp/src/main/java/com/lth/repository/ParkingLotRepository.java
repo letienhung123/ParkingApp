@@ -19,4 +19,5 @@ public interface ParkingLotRepository {
     ParkingLot getParkingLotById (int id);
     boolean deleteParkingLot(int id);
     int countEmptyParkingSpot(int id);
+    int countParkingSpotsByLotId(int parkingLotId);
 }

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Register = () => {
     const [user, setUser] = useState({
         "username": "", "password": "", "confirmPass": "", "firstName": "",
-        "lastName": "", "email": "", "phone": ""
+        "lastName": "", "email": "", "phone": "", "plate": ""
     });
     const avatar = useRef();
     const nav = useNavigate();
@@ -82,6 +82,10 @@ const Register = () => {
                 <Form.Group className="mb-3" >
                     <Form.Label>Số điện thoại</Form.Label>
                     <Form.Control value={user.phone} onChange={e => change(e, "phone")} type="number" placeholder="..." />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Biển số xe</Form.Label>
+                    <Form.Control value={user.plate} onChange={e => change(e, "plate")} type="text" placeholder="Nhập biển số..." required />
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Ảnh đại diện</Form.Label>

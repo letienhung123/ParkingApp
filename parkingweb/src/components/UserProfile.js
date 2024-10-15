@@ -106,6 +106,14 @@ const UserProfile = () => {
         const seconds = differenceInSeconds % 60;
         return `${hours} giờ ${minutes} phút ${seconds} giây`;
     };
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Tháng bắt đầu từ 0
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
 
     return (
         <Container className="mt-5">
@@ -131,7 +139,7 @@ const UserProfile = () => {
                                         <strong>Phone:</strong> {user.phoneNumber}
                                     </Card.Text>
                                     <Card.Text>
-                                        <strong>Address:</strong>
+                                        <strong>Biển số xe:</strong> {user.bsx}
                                     </Card.Text>
                                 </Col>
                             </Row>
@@ -166,14 +174,26 @@ const UserProfile = () => {
                         reservation.map((item, index) => (
                             <Card className="mb-3" key={index}>
                                 <Card.Body>
-                                    <Row>
-                                        <Col md="4"><strong>Tên bãi xe:</strong> {item.parkingLotName}</Col>
-                                        <Col md="2"><strong>Số giờ thuê:</strong> {convertTime(new Date(item.endTime) - new Date(item.startTime))}</Col>
-                                        <Col md="3"><strong>Tổng tiền:</strong> {item.totalPrice} VND</Col>
-                                        <Col md="3"><strong>Trạng thái:</strong> {item.reservationStatus}</Col>
+                                    <Row className="d-flex align-items-center">
+                                        <Col md="3" className="d-flex justify-content-start">
+                                            <strong>Tên bãi xe:</strong> {item.parkingLotName}
+                                        </Col>
+                                        <Col md="2" className="d-flex justify-content-start">
+                                            <strong>Ngày:</strong> {formatDate(item.startTime)}
+                                        </Col>
+                                        <Col md="2" className="d-flex justify-content-start">
+                                            <strong>Số giờ thuê:</strong> {convertTime(new Date(item.endTime) - new Date(item.startTime))}
+                                        </Col>
+                                        <Col md="2" className="d-flex justify-content-start">
+                                            <strong>Tổng tiền:</strong> {item.totalPrice} VND
+                                        </Col>
+                                        <Col md="2" className="d-flex justify-content-start">
+                                            <strong>Trạng thái:</strong> {item.reservationStatus}
+                                        </Col>
                                     </Row>
                                 </Card.Body>
                             </Card>
+
                         ))
                     ) : (
                         <p>Không có lịch sử thuê bãi xe.</p>

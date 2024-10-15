@@ -53,17 +53,17 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
         s.save(re);
 
 //        if (re.getReservationStatus().equals("Confirmed")) {
-            Payment p = new Payment();
-            p.setReservationID(re);
-            p.setPaymentDate(new Date());
-            p.setPaymentMethod("E-wallets");
-            p.setPaymentStatus("successful");
-            p.setAmount(re.getTotalPrice());
-            s.save(p);
+        Payment p = new Payment();
+        p.setReservationID(re);
+        p.setPaymentDate(new Date());
+        p.setPaymentMethod("E-wallets");
+        p.setPaymentStatus("successful");
+        p.setAmount(re.getTotalPrice());
+        s.save(p);
 
-            ParkingSpot ps = this.spotRepo.getParkingSpotById(r.getParkingSpotId());
-            ps.setStatus("Booked");
-            this.spotRepo.addOrUpdateParkingSpot(ps);
+        ParkingSpot ps = this.spotRepo.getParkingSpotById(r.getParkingSpotId());
+        ps.setStatus("Booked");
+        this.spotRepo.addOrUpdateParkingSpot(ps);
 //        }
 
     }
@@ -109,14 +109,14 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
         Session s = this.factory.getObject().getCurrentSession();
         List<Reservation> reservations = null;
 
-        String hql = "SELECT r FROM Reservation r WHERE r.reservationStatus = :status" +
-                " AND r.spotID.parkingLotID.parkingLotID = :parkingLotID";
+        String hql = "SELECT r FROM Reservation r WHERE r.reservationStatus = :status"
+                + " AND r.spotID.parkingLotID.parkingLotID = :parkingLotID";
         Query<Reservation> query = s.createQuery(hql, Reservation.class);
         query.setParameter("status", "Waiting");
         query.setParameter("parkingLotID", id);
 
         reservations = query.list();
-        
+
         return reservations;
     }
 
@@ -125,19 +125,31 @@ public class ReceiptRepositoryImpl implements ReceiptRepository {
 //        Session s = this.factory.getObject().getCurrentSession();
 //        Reservation r = s.get(Reservation.class, id);
 //        r.setReservationStatus("Confirmed");
-    Session s = this.factory.getObject().getCurrentSession();
+        Session s = this.factory.getObject().getCurrentSession();
 
-    String hql = "SELECT r FROM Reservation r WHERE r.reservationStatus = :status AND r.userID.accountID.accountID = :accountID";
-    Query<Reservation> query = s.createQuery(hql, Reservation.class);
-    query.setParameter("status", "Waiting");
-    query.setParameter("accountID", id);
+        String hql = "SELECT r FROM Reservation r WHERE r.reservationStatus = :status AND r.userID.accountID.accountID = :accountID";
+        Query<Reservation> query = s.createQuery(hql, Reservation.class);
+        query.setParameter("status", "Waiting");
+        query.setParameter("accountID", id);
 
-    List<Reservation> reservations = query.list();
+        List<Reservation> reservations = query.list();
 
-    for (Reservation r : reservations) {
-        r.setReservationStatus("Confirmed");
-        s.update(r);
+        for (Reservation r : reservations) {
+            r.setReservationStatus("Confirmed");
+            s.update(r);
+        }
     }
+
+    @Override
+    public List<Reservation> getAllReservationsByParkingLotID(int parkingLotID) {
+        Session s = this.factory.getObject().getCurrentSession();
+
+        String hql = "SELECT r FROM Reservation r WHERE r.spotID.parkingLotID.parkingLotID = :parkingLotID";
+        Query<Reservation> query = s.createQuery(hql, Reservation.class);
+        query.setParameter("parkingLotID", parkingLotID);
+
+        List<Reservation> reservations = query.list();
+        return reservations;
     }
 
 }

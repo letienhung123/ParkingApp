@@ -15,7 +15,7 @@ export const endpoints = {
     "reservations": (id) => `${SERVER_CONTEXT}/api/reservations/${id}/`,
     "updateEmpty": (id) => `${SERVER_CONTEXT}/api/parkingspot/update-empty/${id}/`,
     "updateInUse": (id) => `${SERVER_CONTEXT}/api/parkingspot/update-inuse/${id}/`,
-    "update_reservation": (id) => `${SERVER_CONTEXT}/api/reservation/${id}/`
+    "update_reservation": (id) => `${SERVER_CONTEXT}/api/reservation/${id}/`,
 }
 
 export const authApi = () => {

@@ -19,4 +19,5 @@ public interface ReceiptRepository {
     List<Reservation> getReservationsByUserID(int id);
     List<Reservation> getWaitingReservations(int id);
     void updateReservation(int id);
+    List<Reservation> getAllReservationsByParkingLotID(int parkingLotID);
 }

@@ -144,4 +144,13 @@ public class ParkingLotRepositoryImpl implements ParkingLotRepository {
         return ((Long) q.getSingleResult()).intValue();
     }
 
+    @Override
+    public int countParkingSpotsByLotId(int parkingLotId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT COUNT(ps) FROM ParkingSpot ps WHERE ps.parkingLotID.parkingLotID = :parkingLotID");
+        q.setParameter("parkingLotID", parkingLotId);
+
+        return ((Long) q.getSingleResult()).intValue();
+    }
+
 }

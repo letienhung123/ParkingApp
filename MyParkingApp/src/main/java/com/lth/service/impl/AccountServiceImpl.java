@@ -58,7 +58,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account getAccountByUsername(String username) {
-        return this.accountRepo.getAccountByUsername(username);
+        Account a = this.accountRepo.getAccountByUsername(username);
+        a.setBsx(this.userRepo.findByUsername(username).getLicensePlate());
+        return a;
     }
 
     @Override
@@ -76,6 +78,8 @@ public class AccountServiceImpl implements AccountService {
         a.setUsername(params.get("username"));
         a.setPassword(this.passEncoder.encode(params.get("password")));
         a.setRole("ROLE_USER");
+        UserDetail us = new UserDetail();
+        us.setLicensePlate(params.get("plate"));
         if (!avatar.isEmpty()) {
             try {
                 Map res = this.cloudinary.uploader().upload(avatar.getBytes(),
@@ -87,8 +91,9 @@ public class AccountServiceImpl implements AccountService {
         }
         this.accountRepo.addAccount(a);
 
-        UserDetail us = new UserDetail();
+        
         us.setAccountID(a);
+        us.setLicensePlate(params.get("plate"));
         this.userRepo.addUserDetail(us);
 
         return a;

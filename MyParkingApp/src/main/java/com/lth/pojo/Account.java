@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -89,6 +90,8 @@ public class Account implements Serializable {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountID")
     private Set<UserDetail> userDetailSet;
+    @Transient
+    private String bsx;
 
     public Account() {
     }
@@ -236,6 +239,20 @@ public class Account implements Serializable {
      */
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    /**
+     * @return the bsx
+     */
+    public String getBsx() {
+        return bsx;
+    }
+
+    /**
+     * @param bsx the bsx to set
+     */
+    public void setBsx(String bsx) {
+        this.bsx = bsx;
     }
     
 }

@@ -14,12 +14,13 @@ const Home = () => {
         try {
             let e = endpoints['parkinglots'];
 
-            // Build query parameters
             const params = new URLSearchParams();
             const kw = q.get("kw");
+            const page = q.get("page") || 1;
             if (kw !== null) params.append("kw", kw);
             if (fromPrice) params.append("fromPrice", fromPrice);
             if (toPrice) params.append("toPrice", toPrice);
+            params.append("page", page);
 
             if (params.toString()) {
                 e = `${e}?${params.toString()}`;
@@ -45,10 +46,11 @@ const Home = () => {
         }
     }
 
-    const applyFilters = () => {
+
+    const loadMore = () => {
         const newParams = new URLSearchParams(q.toString());
-        if (fromPrice) newParams.set("fromPrice", fromPrice);
-        if (toPrice) newParams.set("toPrice", toPrice);
+        const currentPage = parseInt(q.get("page") || "1", 10);
+        newParams.set("page", currentPage + 1);
         setQ(newParams);
     }
 
@@ -69,7 +71,6 @@ const Home = () => {
                                 <Form.Label className="visually-hidden">Giá đến</Form.Label>
                                 <Form.Control type="number" name="toPrice" value={toPrice} onChange={handlePriceChange} placeholder="Giá đến"/>
                             </Form.Group>
-                            
                         </Form>
                     </Col>
                 </Row>
@@ -82,7 +83,7 @@ const Home = () => {
                             <Card.Body>
                                 <Card.Title>{c.name}</Card.Title>
                                 <Card.Text>Địa chỉ: {c.address}</Card.Text>
-                                <Card.Text>Tổng chỗ đỗ: {c.totalSpots} chỗ</Card.Text>
+                                <Card.Text>Tổng chỗ đỗ: {c.countSumSpots} chỗ</Card.Text>
                                 <Card.Text>Giá: {c.pricePerHour}/giờ</Card.Text>
                                 <Card.Text>Tiện ích: {c.facilities}</Card.Text>
                                 <Card.Title>Còn {c.emptySpots} chỗ trống</Card.Title>
@@ -92,6 +93,9 @@ const Home = () => {
                     </Col>
                 ))}
             </Row>
+            <div className="mt-2 text-center mb-1">
+                <Button variant="primary" onClick={loadMore}>Xem thêm</Button>
+            </div>
         </Container>
     );
 }

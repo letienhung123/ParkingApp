@@ -38,4 +38,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/XML/XMLDocument.xml to edit this 
         <put-attribute name="content" 
                        value="/WEB-INF/pages/spotcreating.jsp" />
     </definition>
+    <definition name="receipt" extends="baseLayout">
+        <put-attribute name="title" value="Lịch sử đặt chỗ" />
+        <put-attribute name="content" 
+                       value="/WEB-INF/pages/receipt.jsp" />
+    </definition>
 </tiles-definitions>

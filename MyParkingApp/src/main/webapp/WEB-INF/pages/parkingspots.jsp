@@ -14,6 +14,8 @@
     <div class="card-footer">Giá mỗi giờ: ${selectedParkingLot.pricePerHour}</div>
 </div>
 
+<a href="<c:url value="/parkinglots/${selectedParkingLot.parkingLotID}/receipt"/>" class="btn btn-success">Xem lịch sử đặt chỗ</a>
+
 <h3 class="text-center text-info">Khách hàng đang đỗ</h3>
 <div class="row">
     <c:forEach items="${reservationsByLotID}" var="r" varStatus="status">

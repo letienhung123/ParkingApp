@@ -20,7 +20,7 @@
                         <div class="card-body" >
                             <h4 class="card-title">${p.name}</h4>
                             <p class="card-text">Địa chỉ: ${p.address} </p>
-                            <p class="card-text">Tổng chỗ đậu: ${p.totalSpots} chỗ </p>
+                            <p class="card-text">Tổng chỗ đậu: ${p.countSumSpots} chỗ </p>
                             <p class="card-text">Giá: ${p.pricePerHour}/giờ </p>
                             <p class="card-text">Tiện ích: ${p.facilities} </p>
                             <p class="card-text">Số chỗ trống: ${p.emptySpots} </p>

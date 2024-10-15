@@ -42,6 +42,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
         for (ParkingLot lot : parkingLots) {
             int emptySpots = this.parkingLotRepo.countEmptyParkingSpot(lot.getParkingLotID());
             lot.setEmptySpots(emptySpots);
+            lot.setCountSumSpots(this.parkingLotRepo.countParkingSpotsByLotId(lot.getParkingLotID()));
         }
         return parkingLots;
     }

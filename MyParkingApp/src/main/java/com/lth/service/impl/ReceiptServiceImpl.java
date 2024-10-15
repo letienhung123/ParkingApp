@@ -52,23 +52,37 @@ public class ReceiptServiceImpl implements ReceiptService {
     @Override
     public List<Reservation> getWaitingReservations(int id) {
         List<Reservation> reservations = this.receiptRepo.getWaitingReservations(id);
-        for (Reservation r : reservations){
+        for (Reservation r : reservations) {
             Account a = this.accRepo.getAccountByReservationID(r.getReservationID());
             UserDetail u = this.userRepo.findByUsername(a.getUsername());
-    
-            r.setFulName(a.getFirstName()+" "+a.getLastName());
+
+            r.setFulName(a.getFirstName() + " " + a.getLastName());
             r.setPlate(u.getLicensePlate());
-            r.setPhoneNum(a.getPhoneNumber());   
-            r.setLocation(String.valueOf(r.getSpotID().getLevel())+"-"+String.valueOf(r.getSpotID().getSpotNumber()));
+            r.setPhoneNum(a.getPhoneNumber());
+            r.setLocation(String.valueOf(r.getSpotID().getLevel()) + "-" + String.valueOf(r.getSpotID().getSpotNumber()));
         }
-        
-        
+
         return reservations;
     }
 
     @Override
     public void updateReservation(int id) {
         this.receiptRepo.updateReservation(id);
+    }
+
+    @Override
+    public List<Reservation> getAllReservationsByParkingLotID(int parkingLotID) {
+        List<Reservation> reservations = this.receiptRepo.getAllReservationsByParkingLotID(parkingLotID);
+        for (Reservation r : reservations) {
+            Account a = this.accRepo.getAccountByReservationID(r.getReservationID());
+            UserDetail u = this.userRepo.findByUsername(a.getUsername());
+
+            r.setFulName(a.getFirstName() + " " + a.getLastName());
+            r.setPlate(u.getLicensePlate());
+            r.setPhoneNum(a.getPhoneNumber());
+            r.setLocation(String.valueOf(r.getSpotID().getLevel()) + "-" + String.valueOf(r.getSpotID().getSpotNumber()));
+        }
+        return reservations;
     }
 
 }

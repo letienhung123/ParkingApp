@@ -105,6 +105,8 @@ public class ParkingLot implements Serializable {
     
     @Transient
     private int emptySpots;
+    @Transient
+    private int countSumSpots;
 
     public ParkingLot() {
     }
@@ -270,6 +272,20 @@ public class ParkingLot implements Serializable {
      */
     public void setEmptySpots(int emptySpots) {
         this.emptySpots = emptySpots;
+    }
+
+    /**
+     * @return the countSumSpots
+     */
+    public int getCountSumSpots() {
+        return countSumSpots;
+    }
+
+    /**
+     * @param countSumSpots the countSumSpots to set
+     */
+    public void setCountSumSpots(int countSumSpots) {
+        this.countSumSpots = countSumSpots;
     }
     
 }
